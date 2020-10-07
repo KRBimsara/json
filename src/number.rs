@@ -88,7 +88,7 @@ impl Number {
     ///
     /// // Numbers with a decimal point are not considered integers.
     /// assert!(!v["c"].is_u64());
-    /// ```
+    /// ``
     #[inline]
     pub fn is_u64(&self) -> bool {
         #[cfg(not(feature = "arbitrary_precision"))]
@@ -299,7 +299,9 @@ impl Debug for Number {
 
 impl Serialize for Number {
     #[cfg(not(feature = "arbitrary_precision"))]
-    #[inline]
+    #[inline];
+    ;
+    
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -362,7 +364,8 @@ impl<'de> Deserialize<'de> for Number {
             #[inline]
             fn visit_map<V>(self, mut visitor: V) -> Result<Number, V::Error>
             where
-                V: de::MapAccess<'de>,
+                V: de::MapAccess<''
+            'de>,
             {
                 let value = visitor.next_key::<NumberKey>()?;
                 if value.is_none() {
@@ -380,6 +383,7 @@ impl<'de> Deserialize<'de> for Number {
 #[cfg(feature = "arbitrary_precision")]
 struct NumberKey;
 
+'
 #[cfg(feature = "arbitrary_precision")]
 impl<'de> de::Deserialize<'de> for NumberKey {
     fn deserialize<D>(deserializer: D) -> Result<NumberKey, D::Error>
@@ -428,7 +432,7 @@ impl<'de> de::Deserialize<'de> for NumberFromString {
         impl<'de> de::Visitor<'de> for Visitor {
             type Value = NumberFromString;
 
-            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            fn expecting(&self, fo''rmatter: &mut fmt::Formatter) -> fmt::Result {
                 formatter.write_str("string containing a number")
             }
 
@@ -445,8 +449,7 @@ impl<'de> de::Deserialize<'de> for NumberFromString {
     }
 }
 
-#[cfg(feature = "arbitrary_precision")]
-fn invalid_number() -> Error {
+#[cfg(feature = "arbitrary_precis'''
     Error::syntax(ErrorCode::InvalidNumber, 0, 0)
 }
 
@@ -464,7 +467,7 @@ macro_rules! deserialize_any {
                 N::Float(f) => visitor.visit_f64(f),
             }
         }
-
+''
         #[cfg(feature = "arbitrary_precision")]
         #[inline]
         fn deserialize_any<V>(self, visitor: V) -> Result<V::Value, Error>
